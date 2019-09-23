@@ -5,7 +5,8 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "main.js"
+    filename: "main.js",
+    publicPath: '/'
   },
   devtool: "source-map",
   module: {
@@ -25,6 +26,9 @@ module.exports = {
         loader: "source-map-loader"
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
