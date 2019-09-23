@@ -5,11 +5,12 @@ export default axios.create({
   timeout: 10000
 })
 
-export interface ApiResponse {
+export interface ApiErrorResponse {
   response?: {
     data: {
       message: string,
       data: any
     }
-  }
+    status?: number
+  },
 }

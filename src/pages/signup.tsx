@@ -4,7 +4,7 @@ import * as Cookie from 'js-cookie'
 import Template from './templates/default.tsx'
 import InputField from '../components/input-field.tsx'
 import Button from '../components/button.tsx'
-import api, { ApiResponse } from '../utils/http.ts'
+import api, { ApiErrorResponse } from '../utils/http.ts'
 
 class SignupPage extends React.Component<any> {
   static contextTypes = {}
@@ -47,10 +47,10 @@ class SignupPage extends React.Component<any> {
       .then((response: any) => {
         this.setState({ isSendingData: false })
 
-        Cookie.set('user-token', response.data.data.token, { path: '/', expires: 1 })
+        Cookie.set('user-token', response.data.data.token, { expires: 1 })
         this.props.history.push('/dashboard')
       })
-      .catch((err: ApiResponse) => {
+      .catch((err: ApiErrorResponse) => {
         this.setState({ isSendingData: false })
 
         if (err.response) {
