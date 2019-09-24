@@ -1,0 +1,31 @@
+.code-card {
+  .tab-menu-container {
+    padding: 10px 13px;
+
+    ul {
+      display: flex;
+      flex-direction: row;
+
+      li a {
+        color: #e2e2e2;
+        padding: 2px 10px;
+        border-radius: 10px;
+        font-size: 13px;
+        transition: background 0.3s;
+
+        &:hover {
+          background: #6F6F6F;
+        }
+
+        &.active {
+          color: #121212;
+          background: #C4C4C4;
+        }
+      }
+    }
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+}

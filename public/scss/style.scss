@@ -1,0 +1,19 @@
+ul,li { margin: 0; padding: 0; list-style: none }
+
+a {
+  text-decoration: none;
+}
+
+.copy-btn {
+  background: none;
+  padding: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #b7b7b7;
+  transition: color 0.3s;
+}
+
+.copy-btn:hover {
+  color: #555555;
+}
