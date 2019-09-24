@@ -13,30 +13,33 @@ export default class CodeCard extends React.Component {
 
   containerRef = React.createRef<HTMLDivElement>()
 
-  state: any = {
-    activeTabIndex: null
-  }
-
   componentDidMount () {
     const { tabMenus } = this.props
 
     this.changeTab(tabMenus[0].id)
   }
 
-  componentDidUpdate () {
-    const { activeTabIndex } = this.state
+  changeActiveTabMenu (activeTabId: string): void {
+    const container = this.containerRef.current
+    for (let item of container.querySelectorAll('.tab-menu')) item.classList.remove('active')
 
-    console.log(activeTabIndex, 'called')
+    const selected = container.querySelector(`.tab-menu[data-tab-id='${activeTabId}']`)
+    if (selected) selected.classList.add('active')
   }
 
-  changeTab (tabId: string): void {
+  changeActiveTabContent (activeTabId: string): void {
     const container = this.containerRef.current
     for (let item of container.querySelectorAll('.tab-content')) {
       item.classList.remove('active')
     }
 
-    const selected = container.querySelector(`.tab-content#${tabId}`)
+    const selected = container.querySelector(`.tab-content#${activeTabId}`)
     if (selected) selected.classList.add('active')
+  }
+
+  changeTab (tabId: string): void {
+    this.changeActiveTabContent(tabId)
+    this.changeActiveTabMenu(tabId)
   }
 
   tabMenuClickListener (event: MouseEvent, tabId: string) {
@@ -60,6 +63,8 @@ export default class CodeCard extends React.Component {
                 <a
                   href='#'
                   onClick={(event: any) => this.tabMenuClickListener(event, menu.id)}
+                  className='tab-menu'
+                  data-tab-id={menu.id}
                 >
                   {menu.text}
                 </a>
