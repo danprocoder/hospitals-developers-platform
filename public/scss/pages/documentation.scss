@@ -6,20 +6,30 @@
 
 .url-params-table {
   width: 100%;
+  border-spacing: 0;
 
   td {
     vertical-align: top;
+    padding: 7px 14px;
+    border-bottom: 1px solid #ffffff;
 
     .type {
-      font-style: italic;
+      color: #838383;
+      font-size: 14px;
     }
 
     .required {
       color: #A73B3B;
+      font-size: 14px;
     }
 
     .optional {
       color: #838383;
+      font-size: 14px;
+    }
+
+    &.description {
+      width: 100%;
     }
   }
 }
@@ -37,5 +47,55 @@
 
   .url {
     margin-left: 10px;
+  }
+}
+
+.code-view {
+  position: relative;
+  padding: 10px 44px 10px 10px;
+  display: flex;
+  flex-direction: row;
+  white-space: pre;
+  font-size: 12px;
+  line-height: 20px;
+
+  .lines {
+    color: #595959;
+  }
+
+  .code {
+    margin-left: 20px;
+
+    code {
+      font-family: 'Fira Code';
+
+      .token {
+        &.function {
+          color: #FDF877;
+        }
+
+        &.string {
+          color: #4EE45D;
+        }
+
+        &.parameter {
+          color: #37BFF9;
+        }
+
+        &.operator {
+          color: #ff57ff;
+        }
+
+        &.punctuation {
+          color: #ff7272;
+        }
+      }
+    }
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }

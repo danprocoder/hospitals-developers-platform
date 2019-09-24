@@ -2,10 +2,36 @@ import * as React from 'react'
 import { Copy } from 'react-feather'
 import { Link } from 'react-router-dom'
 import * as Toastr from 'toastr'
+import * as Prism from 'prismjs'
 import { copyToClipboard } from '../utils/clipboard'
 import Template from './templates/default'
 import CodeCard, { CodeCardTabContent } from '../components/code-card'
 import '../../public/scss/pages/documentation.scss'
+
+/* CODE EXAMPLES */
+const exampleSpecificLocation = {
+  js: `
+fetch('http://api.nigeriahealthcarecentres.com/api/v1/hospitals', {
+  headers: { 'access-token': 'YOUR_API_KEY' }
+})
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err))
+    `
+}
+
+const exampleNearbyLocation = {
+  js: `
+fetch('http://api.nigeriahealthcarecentres.com/api/v1/hospitals/nearby?lat=78.9876&lng=-167.897&radius=45', {
+  headers: { 'access-token': 'YOUR_API_KEY' }
+})
+  .then(res => res.json())
+  .then(res => console.log(res))
+  .catch(err => console.error(err))
+    `
+}
+
+/* COMPONENTS */
 
 interface URLParametersProps {
   parameters: any[]
@@ -19,13 +45,13 @@ function URLParameters (props: URLParametersProps): JSX.Element {
           <td>
             {param.name}
             <br />
-            <span className='type'>{param.type}</span>
+            <span className='type'>({param.type})</span>
           </td>
           <td>{param.required
             ? <span className='required'>Required</span>
             : <span className='optional'>Optional</span>
           }</td>
-          <td>{param.description}</td>
+          <td className='description'>{param.description}</td>
         </tr>
       ))}
       </tbody>
@@ -48,6 +74,33 @@ function URL (props: URLProps): JSX.Element {
       <span className='method'>{props.method.toUpperCase()}</span>
       <span className='url'>{props.url}</span>
       <button className='copy-btn' onClick={() => copyUrlToClipboard(props.url)}>
+        <Copy />
+      </button>
+    </div>
+  )
+}
+
+type CodeViewProps = { code: string, rawCode: string }
+function CodeView (props: CodeViewProps) {
+  const code = props.code.trim()
+  const rawCode = props.rawCode.trim()
+
+  function copyCode () {
+    copyToClipboard(rawCode)
+    Toastr.success('Example code copied to clipboard')
+  }
+
+  const numLines: number = rawCode.split(/\n/).length
+
+  return (
+    <div className='code-view'>
+      <div className='lines'>
+        {Array.from(Array(numLines), (e: any, line: number) => <div key={'line' + line}>{line + 1}</div>)}
+      </div>
+      <div className='code'>
+        <code className='language-javascript'>{code}</code>
+      </div>
+      <button onClick={copyCode} className='copy-btn'>
         <Copy />
       </button>
     </div>
@@ -101,7 +154,10 @@ function ApiDocumentationSection () {
                   key='js'
                   id='js'
                 >
-                  {'fetch().then().catch()'}
+                  <CodeView
+                    code={exampleSpecificLocation.js}
+                    rawCode={exampleSpecificLocation.js}
+                  />
                 </CodeCardTabContent>
                 <CodeCardTabContent
                   key='curl'
@@ -144,7 +200,10 @@ function ApiDocumentationSection () {
                   key='js'
                   id='js'
                 >
-                  {'fetch().then().catch()'}
+                  <CodeView
+                    code={exampleNearbyLocation.js}
+                    rawCode={exampleNearbyLocation.js}
+                  />
                 </CodeCardTabContent>
                 <CodeCardTabContent
                   key='curl'
@@ -162,6 +221,11 @@ function ApiDocumentationSection () {
 }
 
 export default class DocumentationPage extends React.Component {
+
+  componentDidMount () {
+    Prism.highlightAll()
+  }
+
   render (): JSX.Element {
     return (
       <Template>
