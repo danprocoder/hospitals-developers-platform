@@ -3,36 +3,61 @@ import { Link } from 'react-router-dom'
 import Template from './templates/default'
 import InputField from '../components/input-field'
 import Button from '../components/button'
+import CodeCard, { CodeCardTabContent } from '../components/code-card'
 
 class TryItOut extends React.Component<any> {
+
+  state = {
+    isGettingResult: false
+  }
+
+  fetchResults (): void {
+    this.setState({ isGettingResult: true })
+  }
+
   render () {
+    const { isGettingResult } = this.state
+
     return (
       <div>
         <div>
           <h4>Try it Out</h4>
         </div>
-        <div>
-          <form>
-            <div>
-              <InputField />
-            </div>
-            <div>
-              <InputField />
-            </div>
-            <div>
-              <Button text='Get Result' />
-            </div>
-          </form>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
           <div>
             <div>
-              <ul>
-                <li>
-                  <a href='#'>Request</a></li>
-                <li>
-                  <a href='#'>Response</a></li>
-              </ul>
+              <InputField />
+            </div>
+            <div>
+              <InputField />
+            </div>
+            <div>
+              <Button
+                text='Get Result'
+                isLoading={isGettingResult}
+                onClick={() => this.fetchResults()}
+              />
             </div>
           </div>
+          <CodeCard
+            tabMenus={[
+              { id: 'response', text: 'Response' },
+              { id: 'request', text: 'Request' }
+            ]}
+          >
+            <CodeCardTabContent
+              key='request'
+              id='response'
+            >
+              <div>Text</div>
+            </CodeCardTabContent>
+            <CodeCardTabContent
+              key='request'
+              id='request'
+            >
+              <div>Text</div>
+            </CodeCardTabContent>
+          </CodeCard>
         </div>
       </div>
     )

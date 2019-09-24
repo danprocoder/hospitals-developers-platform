@@ -1,0 +1,20 @@
+@keyframes moving-gradient {
+  0%{background-position: 100% 0%}
+  100%{background-position: -100% 0%}
+}
+
+.button {
+  background: #2889E2;
+  color: #ffffff;
+  font-size: 15px;
+  font-family: inherit;
+  padding: 9px 18px;
+  border-radius: 5px;
+  border: none;
+
+  &.loading {
+    background: linear-gradient(90deg, #77B7F2 0%, #4d9eeb 50%, #77B7F2 100%);
+    background-size: 200% 200%;
+    animation: moving-gradient 1s infinite;
+  }
+}
