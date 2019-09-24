@@ -1,0 +1,18 @@
+.code-card {
+  .tab-menu-container {
+    padding: 10px 13px;
+
+    ul {
+      display: flex;
+      flex-direction: row;
+
+      li a {
+        color: #e2e2e2;
+      }
+    }
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+}
