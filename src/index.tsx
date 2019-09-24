@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Home from './pages/home.tsx'
-import SignUp from './pages/signup.tsx'
-import LogIn from './pages/login.tsx'
-import Documentation from './pages/documentation.tsx'
-import UserDashboard from './pages/user/dashboard.tsx'
+import Home from './pages/home'
+import SignUp from './pages/signup'
+import LogIn from './pages/login'
+import Documentation from './pages/documentation'
+import UserDashboard from './pages/user/dashboard'
 import '../public/scss/style.scss'
 
 class App extends React.Component {

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import Template from './templates/default.tsx'
-import InputField from '../components/input-field.tsx'
-import Button from '../components/button.tsx'
+import Template from './templates/default'
+import InputField from '../components/input-field'
+import Button from '../components/button'
 
 class TryItOut extends React.Component<any> {
   render () {

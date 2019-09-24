@@ -3,8 +3,8 @@ import { withRouter } from 'react-router'
 import * as Toastr from 'toastr'
 import * as Cookie from 'js-cookie'
 import { Copy as CopyIcon } from 'react-feather'
-import api, { ApiErrorResponse } from '../../utils/http.ts'
-import Template from './templates/default.tsx'
+import api, { ApiErrorResponse } from '../../utils/http'
+import Template from './templates/default'
 
 Toastr.options.timeOut = 1000
 

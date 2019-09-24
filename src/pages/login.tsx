@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { withRouter } from 'react-router'
 import * as Cookie from 'js-cookie'
-import Template from './templates/default.tsx'
-import InputField from '../components/input-field.tsx'
-import Button from '../components/button.tsx'
-import api, { ApiErrorResponse } from '../utils/http.ts'
+import Template from './templates/default'
+import InputField from '../components/input-field'
+import Button from '../components/button'
+import api, { ApiErrorResponse } from '../utils/http'
 
 class LoginPage extends React.Component<any> {
 

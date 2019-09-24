@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Copy } from 'react-feather'
 import { Link } from 'react-router-dom'
 import * as Toastr from 'toastr'
-import { copyToClipboard } from '../utils/clipboard.ts'
-import Template from './templates/default.tsx'
-import CodeCard, { CodeCardTabContent } from '../components/code-card.tsx'
+import { copyToClipboard } from '../utils/clipboard'
+import Template from './templates/default'
+import CodeCard, { CodeCardTabContent } from '../components/code-card'
 import '../../public/scss/pages/documentation.scss'
 
 interface URLParametersProps {
