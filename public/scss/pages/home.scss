@@ -1,0 +1,58 @@
+.try-it-out-section {
+  .response-body,
+  .request-body {
+    height: 200px;
+    overflow: auto;
+    padding: 10px 10px 0 10px;
+  }
+
+  .response-body {
+    white-space: pre;
+    display: block;
+
+    .token {
+      &.punctuation {
+        color: #ffffff;
+      }
+
+      &.string {
+        color: #4EE45D;
+      }
+
+      &.number {
+        color: orange;
+      }
+
+      &.operator,
+      &.keyword {
+        color: #ff7272;
+      }
+    }
+  }
+
+  .request-body {
+    .method {
+      background: #46a944;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .url {
+      margin-left: 10px;
+    }
+
+    .extra {
+      margin-top: 20px;
+
+      .header {
+        font-weight: bold;
+        color: #7d7d7d;
+        text-transform: uppercase;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 7px;
+        padding-bottom: 2px;
+      }
+    }
+  }
+}
