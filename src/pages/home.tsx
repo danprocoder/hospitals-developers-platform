@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import * as Prism from 'prismjs'
 import * as QueryString from 'querystring'
+import { MapPin } from 'react-feather'
 import CopyButton from '../components/copy-button'
 import Template from './templates/default'
 import InputField from '../components/input-field'
@@ -10,7 +11,7 @@ import CodeCard, { CodeCardTabContent } from '../components/code-card'
 import '../../public/scss/pages/home.scss'
 
 class TryItOut extends React.Component<any> {
-  baseUrl = 'http://api.nigeriahealthcarecentres.com/api/v1'
+  baseUrl = 'http://localhost:4032/api/v1'
 
   state = {
     request: {
@@ -37,7 +38,12 @@ class TryItOut extends React.Component<any> {
   }
 
   fetchResults (): void {
-    type UrlParam = { state?: string }
+    type UrlParam = {
+      state?: string,
+      longitude?: string,
+      latitude?: string,
+      radius?: string
+    }
 
     let urlPath = ''
     let params: UrlParam = {}
@@ -49,6 +55,9 @@ class TryItOut extends React.Component<any> {
       params.state = formData.state
     } else if (endPoint === 'certain_radius') {
       urlPath = '/hospitals/nearby'
+      params.longitude = formData.longitude
+      params.latitude = formData.latitude
+      params.radius = formData.radius
     }
     // Prepare query parameter
     const paramsString = QueryString.stringify(params)
@@ -86,21 +95,38 @@ class TryItOut extends React.Component<any> {
     })
   }
 
+  useCurrentLocation (event: any): void {
+    event.preventDefault()
+
+    const { geolocation = null } = navigator
+
+    if (geolocation) {
+      geolocation.getCurrentPosition((position: Position) => {
+        const { latitude, longitude } = position.coords
+
+        this.setState({
+          formData: { ...this.state.formData, latitude, longitude }
+        })
+      })
+    }
+  }
+
   render () {
     const {
       isGettingResult,
       response,
       request,
+      formData,
       endPoint
     } = this.state
 
     return (
-      <div className='try-it-out-section'>
-        <div>
+      <div className='try-it-out-section center-container'>
+        <div className='header-container'>
           <h4>Try it Out</h4>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div>
+          <div className='test-form'>
             <div>
               <select onChange={(event: any) => this.setEndpoint(event)} value={endPoint}>
                 <option value='specific_location'>Specific location</option>
@@ -122,9 +148,29 @@ class TryItOut extends React.Component<any> {
             )}
             {endPoint === 'certain_radius' && (
               <>
-                <InputField label='Latitude' />
-                <InputField label='Longitude' />
-                <InputField label='Radius' />
+                <InputField
+                  label='Latitude'
+                  onChange={(value: string) => this.onFieldValueChanged('latitude', value)}
+                  value={formData.latitude}
+                />
+                <InputField
+                  label='Longitude'
+                  onChange={(value: string) => this.onFieldValueChanged('longitude', value)}
+                  value={formData.longitude}
+                />
+                <div>
+                  <a
+                    href='#'
+                    onClick={(event: any) => this.useCurrentLocation(event)}
+                  >
+                    <MapPin />
+                    Use Current Location
+                  </a>
+                </div>
+                <InputField
+                  label='Radius (m)'
+                  onChange={(value: string) => this.onFieldValueChanged('radius', value)}
+                />
               </>
             )}
             <div>
@@ -177,23 +223,58 @@ class TryItOut extends React.Component<any> {
   }
 }
 
-export default class Home extends React.Component<any> {
-  render (): any {
-    return (
-      <Template>
-        <div>
-          <h1>Welcome to the Developer&apos;s Platform</h1>
-          <div>API to get all hospitals in Nigeria</div>
-          <div>
-            <Link to='/signup'>Get Started {`\u2192`}</Link>
-            <a href='#'>Try it Out</a>
-          </div>
-        </div>
-        <div>
-          345,343,345 healthcare centres in Nigeria added
-        </div>
-        <TryItOut />
-      </Template>
-    )
+let totalNumHospitals = 345759490
+const increaseBy = Math.round(totalNumHospitals / 30)
+
+export default function () {
+  const [numHospitals, setNumHospitals] = React.useState(0)
+
+  function increaseCount () {
+    const increased = numHospitals + increaseBy > totalNumHospitals
+      ? totalNumHospitals
+      : numHospitals + increaseBy
+    setNumHospitals(increased)
   }
+
+  React.useEffect(() => {
+    if (numHospitals === 0) {
+      increaseCount()
+    } else {
+      if (numHospitals < totalNumHospitals) {
+        setTimeout(increaseCount, 10)
+      }
+    }
+  })
+
+  return (
+    <Template>
+      <div className='center-container introduction-section'>
+        <h1>Welcome to the Developer&apos;s Platform</h1>
+        <div>API to get all hospitals in Nigeria</div>
+        <div
+          className='starter-links'
+        >
+          <Link
+            to='/signup'
+            className='get-started-link'
+          >
+            Get Started {`\u2192`}
+          </Link>
+          <a
+            href='#'
+            className='try-it-out-link'
+          >
+            Try it Out
+          </a>
+        </div>
+      </div>
+      <div className='counter-section center-container'>
+        <div className='number'>
+          {numHospitals.toString().replace(/\B(?=(\d{3})+$)/g, ',')}
+        </div>
+        <div>healthcare centres in Nigeria added</div>
+      </div>
+      <TryItOut className='center-container' />
+    </Template>
+  )
 }

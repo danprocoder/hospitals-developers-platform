@@ -1,4 +1,57 @@
+.introduction-section {
+  text-align: center;
+  padding-top: 110px;
+
+  .starter-links {
+    margin-top: 30px;
+
+    .get-started-link,
+    .try-it-out-link {
+      display: inline-block;
+      font-size: 15px;
+      font-family: inherit;
+      padding: 11px 18px;
+      border-radius: 5px;
+    }
+  
+    .get-started-link {
+      background: #2889E2;
+      color: #ffffff;
+    }
+  
+    .try-it-out-link {
+      border: 1px solid #2889E2;
+      color: #2889E2;
+      background: #ffffff;
+      margin-left: 10px;
+    }
+  }
+}
+
+.counter-section {
+  text-align: center;
+
+  .number {
+    font-weight: bold;
+    font-size: 53px;
+  }
+}
+
 .try-it-out-section {
+  .header-container {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+  }
+
+  .test-form {
+    flex: 1;
+  }
+
+  .code-card {
+    flex: 3;
+  }
+
   .response-body,
   .request-body {
     height: 200px;
