@@ -1,0 +1,33 @@
+.site-header {
+  .inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+  
+    .site-nav li {
+      display: inline-block;
+      margin-left: 30px;
+
+      a {
+        color: #777777;
+        transition: color 0.3s;
+
+        &:hover {
+          color: #111111;
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  border-top: 1px solid #efefef;
+
+  .inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

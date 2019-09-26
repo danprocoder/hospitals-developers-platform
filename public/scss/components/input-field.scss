@@ -1,0 +1,27 @@
+.input-field {
+  label {
+    color: #777777;
+    font-size: 13px;
+  }
+
+  input,
+  textarea {
+    display: block;
+    border: 1px solid #b7b7b7;
+    border-radius: 5px;
+    outline: none;
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: 14px;
+    margin-top: 3px;
+  }
+
+  &.focused {
+    label { color: #111111; }
+
+    input,
+    textarea {
+      border-color: #111111;
+    }
+  }
+}

@@ -1,32 +1,50 @@
 import * as React from 'react'
+import '../../public/scss/components/input-field.scss'
 
 interface InputFieldProps {
   isMultiline?: boolean,
   type?: string,
   label?: string,
   errorText?: string,
-  onChange?: (value: string) => void
+  onChange?: (value: string) => void,
+  value?: string
 }
 
 export default (props: InputFieldProps) => {
-  const [value, setValue] = React.useState('')
+  const [focused, changeFocusedState] = React.useState(false)
 
-  function onChange (event: any) {
-    setValue(event.target.value)
+  const onChange = (event: any) => {
+    const { value } = event.target
 
     if (props.onChange) {
-      props.onChange(event.target.value)
+      props.onChange(value)
     }
   }
 
+  const className = ['input-field']
+  if (focused) className.push('focused')
+
   return (
-    <div>
-      <label>{props.label}</label>
+    <div className={className.join(' ')}>
+      {/* <label>{props.label}</label> */}
       <br/>
       {props.isMultiline ? (
-        <textarea value={value} onChange={onChange} />
+        <textarea
+          value={props.value}
+          onChange={onChange}
+          onFocus={() => changeFocusedState(true)}
+          onBlur={() => changeFocusedState(false)}
+          placeholder={props.label}
+        />
       ) : (
-        <input type='text' value={value} onChange={onChange} />
+        <input
+          type='text'
+          value={props.value}
+          onChange={onChange}
+          onFocus={() => changeFocusedState(true)}
+          onBlur={() => changeFocusedState(false)}
+          placeholder={props.label}
+        />
       )}
       {props.errorText && <span>{props.errorText}</span>}
     </div>

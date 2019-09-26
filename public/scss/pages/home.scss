@@ -1,0 +1,111 @@
+.introduction-section {
+  text-align: center;
+  padding-top: 110px;
+
+  .starter-links {
+    margin-top: 30px;
+
+    .get-started-link,
+    .try-it-out-link {
+      display: inline-block;
+      font-size: 15px;
+      font-family: inherit;
+      padding: 11px 18px;
+      border-radius: 5px;
+    }
+  
+    .get-started-link {
+      background: #2889E2;
+      color: #ffffff;
+    }
+  
+    .try-it-out-link {
+      border: 1px solid #2889E2;
+      color: #2889E2;
+      background: #ffffff;
+      margin-left: 10px;
+    }
+  }
+}
+
+.counter-section {
+  text-align: center;
+
+  .number {
+    font-weight: bold;
+    font-size: 53px;
+  }
+}
+
+.try-it-out-section {
+  .header-container {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+  }
+
+  .test-form {
+    flex: 1;
+  }
+
+  .code-card {
+    flex: 3;
+  }
+
+  .response-body,
+  .request-body {
+    height: 200px;
+    overflow: auto;
+    padding: 10px 10px 0 10px;
+  }
+
+  .response-body {
+    white-space: pre;
+    display: block;
+
+    .token {
+      &.punctuation {
+        color: #ffffff;
+      }
+
+      &.string {
+        color: #4EE45D;
+      }
+
+      &.number {
+        color: orange;
+      }
+
+      &.operator,
+      &.keyword {
+        color: #ff7272;
+      }
+    }
+  }
+
+  .request-body {
+    .method {
+      background: #46a944;
+      color: #ffffff;
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .url {
+      margin-left: 10px;
+    }
+
+    .extra {
+      margin-top: 20px;
+
+      .header {
+        font-weight: bold;
+        color: #7d7d7d;
+        text-transform: uppercase;
+        border-bottom: 1px solid #3a3a3a;
+        margin-bottom: 7px;
+        padding-bottom: 2px;
+      }
+    }
+  }
+}
