@@ -5,17 +5,17 @@ interface InputFieldProps {
   type?: string,
   label?: string,
   errorText?: string,
-  onChange?: (value: string) => void
+  onChange?: (value: string) => void,
+  value?: string
 }
 
 export default (props: InputFieldProps) => {
-  const [value, setValue] = React.useState('')
 
-  function onChange (event: any) {
-    setValue(event.target.value)
+  const onChange = (event: any) => {
+    const { value } = event.target
 
     if (props.onChange) {
-      props.onChange(event.target.value)
+      props.onChange(value)
     }
   }
 
@@ -24,9 +24,9 @@ export default (props: InputFieldProps) => {
       <label>{props.label}</label>
       <br/>
       {props.isMultiline ? (
-        <textarea value={value} onChange={onChange} />
+        <textarea value={props.value} onChange={onChange} />
       ) : (
-        <input type='text' value={value} onChange={onChange} />
+        <input type='text' value={props.value} onChange={onChange} />
       )}
       {props.errorText && <span>{props.errorText}</span>}
     </div>

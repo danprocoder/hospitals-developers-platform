@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import * as Prism from 'prismjs'
 import * as QueryString from 'querystring'
+import { MapPin } from 'react-feather'
 import CopyButton from '../components/copy-button'
 import Template from './templates/default'
 import InputField from '../components/input-field'
@@ -10,7 +11,7 @@ import CodeCard, { CodeCardTabContent } from '../components/code-card'
 import '../../public/scss/pages/home.scss'
 
 class TryItOut extends React.Component<any> {
-  baseUrl = 'http://api.nigeriahealthcarecentres.com/api/v1'
+  baseUrl = 'http://localhost:4032/api/v1'
 
   state = {
     request: {
@@ -37,7 +38,12 @@ class TryItOut extends React.Component<any> {
   }
 
   fetchResults (): void {
-    type UrlParam = { state?: string }
+    type UrlParam = {
+      state?: string,
+      longitude?: string,
+      latitude?: string,
+      radius?: string
+    }
 
     let urlPath = ''
     let params: UrlParam = {}
@@ -49,6 +55,9 @@ class TryItOut extends React.Component<any> {
       params.state = formData.state
     } else if (endPoint === 'certain_radius') {
       urlPath = '/hospitals/nearby'
+      params.longitude = formData.longitude
+      params.latitude = formData.latitude
+      params.radius = formData.radius
     }
     // Prepare query parameter
     const paramsString = QueryString.stringify(params)
@@ -86,11 +95,28 @@ class TryItOut extends React.Component<any> {
     })
   }
 
+  useCurrentLocation (event: any): void {
+    event.preventDefault()
+
+    const { geolocation = null } = navigator
+
+    if (geolocation) {
+      geolocation.getCurrentPosition((position: Position) => {
+        const { latitude, longitude } = position.coords
+console.log(latitude, longitude)
+        this.setState({
+          formData: { ...this.state.formData, latitude, longitude }
+        })
+      })
+    }
+  }
+
   render () {
     const {
       isGettingResult,
       response,
       request,
+      formData,
       endPoint
     } = this.state
 
@@ -122,9 +148,29 @@ class TryItOut extends React.Component<any> {
             )}
             {endPoint === 'certain_radius' && (
               <>
-                <InputField label='Latitude' />
-                <InputField label='Longitude' />
-                <InputField label='Radius' />
+                <InputField
+                  label='Latitude'
+                  onChange={(value: string) => this.onFieldValueChanged('latitude', value)}
+                  value={formData.latitude}
+                />
+                <InputField
+                  label='Longitude'
+                  onChange={(value: string) => this.onFieldValueChanged('longitude', value)}
+                  value={formData.longitude}
+                />
+                <div>
+                  <a
+                    href='#'
+                    onClick={(event: any) => this.useCurrentLocation(event)}
+                  >
+                    <MapPin />
+                    Use Current Location
+                  </a>
+                </div>
+                <InputField
+                  label='Radius (m)'
+                  onChange={(value: string) => this.onFieldValueChanged('radius', value)}
+                />
               </>
             )}
             <div>
