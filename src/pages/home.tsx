@@ -103,7 +103,7 @@ class TryItOut extends React.Component<any> {
     if (geolocation) {
       geolocation.getCurrentPosition((position: Position) => {
         const { latitude, longitude } = position.coords
-console.log(latitude, longitude)
+
         this.setState({
           formData: { ...this.state.formData, latitude, longitude }
         })
@@ -121,12 +121,12 @@ console.log(latitude, longitude)
     } = this.state
 
     return (
-      <div className='try-it-out-section'>
-        <div>
+      <div className='try-it-out-section center-container'>
+        <div className='header-container'>
           <h4>Try it Out</h4>
         </div>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <div>
+          <div className='test-form'>
             <div>
               <select onChange={(event: any) => this.setEndpoint(event)} value={endPoint}>
                 <option value='specific_location'>Specific location</option>
@@ -223,23 +223,58 @@ console.log(latitude, longitude)
   }
 }
 
-export default class Home extends React.Component<any> {
-  render (): any {
-    return (
-      <Template>
-        <div>
-          <h1>Welcome to the Developer&apos;s Platform</h1>
-          <div>API to get all hospitals in Nigeria</div>
-          <div>
-            <Link to='/signup'>Get Started {`\u2192`}</Link>
-            <a href='#'>Try it Out</a>
-          </div>
-        </div>
-        <div>
-          345,343,345 healthcare centres in Nigeria added
-        </div>
-        <TryItOut />
-      </Template>
-    )
+let totalNumHospitals = 345759490
+const increaseBy = Math.round(totalNumHospitals / 30)
+
+export default function () {
+  const [numHospitals, setNumHospitals] = React.useState(0)
+
+  function increaseCount () {
+    const increased = numHospitals + increaseBy > totalNumHospitals
+      ? totalNumHospitals
+      : numHospitals + increaseBy
+    setNumHospitals(increased)
   }
+
+  React.useEffect(() => {
+    if (numHospitals === 0) {
+      increaseCount()
+    } else {
+      if (numHospitals < totalNumHospitals) {
+        setTimeout(increaseCount, 10)
+      }
+    }
+  })
+
+  return (
+    <Template>
+      <div className='center-container introduction-section'>
+        <h1>Welcome to the Developer&apos;s Platform</h1>
+        <div>API to get all hospitals in Nigeria</div>
+        <div
+          className='starter-links'
+        >
+          <Link
+            to='/signup'
+            className='get-started-link'
+          >
+            Get Started {`\u2192`}
+          </Link>
+          <a
+            href='#'
+            className='try-it-out-link'
+          >
+            Try it Out
+          </a>
+        </div>
+      </div>
+      <div className='counter-section center-container'>
+        <div className='number'>
+          {numHospitals.toString().replace(/\B(?=(\d{3})+$)/g, ',')}
+        </div>
+        <div>healthcare centres in Nigeria added</div>
+      </div>
+      <TryItOut className='center-container' />
+    </Template>
+  )
 }
