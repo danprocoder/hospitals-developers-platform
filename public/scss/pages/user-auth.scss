@@ -1,0 +1,27 @@
+.user-auth {
+  margin-top: 70px;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .user-auth-header {
+    font-weight: bold;
+    font-size: 34px;
+  }
+  
+  .user-auth-form {
+    margin-top: 30px;
+
+    .input-field {
+      margin-top: 12px;
+    }
+
+    .button-container {
+      margin-top: 30px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

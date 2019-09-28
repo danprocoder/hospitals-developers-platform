@@ -5,6 +5,7 @@ import Template from './templates/default'
 import InputField from '../components/input-field'
 import Button from '../components/button'
 import api, { ApiErrorResponse } from '../utils/http'
+import '../../public/scss/pages/user-auth.scss'
 
 class SignupPage extends React.Component<any> {
   static contextTypes = {}
@@ -74,9 +75,9 @@ class SignupPage extends React.Component<any> {
 
     return (
       <Template>
-        <div>
-          <h4>Create an Account</h4>
-          <div>
+        <div className='user-auth'>
+          <h4 className='user-auth-header'>Create an Account</h4>
+          <div className='user-auth-form'>
             <div>
               <InputField
                 label='Firstname'
@@ -101,9 +102,10 @@ class SignupPage extends React.Component<any> {
                 label='Password'
                 errorText={formError.password}
                 onChange={(value: string) => this.onFieldValueChanged('password', value)}
+                type='password'
               />
             </div>
-            <div>
+            <div className='button-container'>
               <Button
                 text='Sign Up'
                 onClick={() => this.signUpBtnListener()}
