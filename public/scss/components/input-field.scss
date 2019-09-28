@@ -17,6 +17,10 @@
     font-size: 16px;
     margin-top: 3px;
     transition: border 0.3s;
+
+    &:hover {
+      border-color: #a5a5a5;
+    }
   }
 
   &.focused {
