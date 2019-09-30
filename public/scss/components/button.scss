@@ -11,6 +11,11 @@
   padding: 11px 18px;
   border-radius: 5px;
   border: none;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #217cd1;  
+  }
 
   &.loading {
     background: linear-gradient(90deg, #77B7F2 0%, #4d9eeb 50%, #77B7F2 100%);

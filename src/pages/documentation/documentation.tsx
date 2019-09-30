@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { Copy } from 'react-feather'
-import { Link } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import * as Toastr from 'toastr'
 import * as Prism from 'prismjs'
-import { copyToClipboard } from '../utils/clipboard'
-import Template from './templates/default'
-import CodeCard, { CodeCardTabContent } from '../components/code-card'
-import '../../public/scss/pages/documentation.scss'
+import { copyToClipboard } from '../../utils/clipboard'
+import Template from './template'
+import CodeCard, { CodeCardTabContent } from '../../components/code-card'
+import '../../../public/scss/pages/documentation/documentation.scss'
 
 /* CODE EXAMPLES */
 const exampleSpecificLocation = {
@@ -111,10 +111,13 @@ function CodeView (props: CodeViewProps) {
 
 function IntroductionSection () {
   return (
-    <div>
-      <h2>Introduction</h2>
-      <div>
+    <div className='page introduction'>
+      <h2 className='header'>Introduction</h2>
+      <div className='content'>
         <Link to='/signup'>Get your API key</Link>
+      </div>
+      <div className='pagination'>
+        <Link to='/documentation/api-documentation'>API Documentation &rarr;</Link>
       </div>
     </div>
   )
@@ -122,28 +125,31 @@ function IntroductionSection () {
 
 function ApiDocumentationSection () {
   return (
-    <div>
-      <h2>API Documentation</h2>
-      <div>
-        <div>
-          <h4>Getting health centres in a specific location</h4>
+    <div className='page api-doc'>
+      <h2 className='header'>API Documentation</h2>
+      <div className='content'>
+        <div className='section'>
+          <h4 className='section-header'>Getting health centres in a specific location</h4>
           <div>
-            <div>
+            <div className='api-url'>
               <URL
                 method='get'
                 url='http://api.nigeriahealthcarecentres.com/api/v1/hospitals'
               />
             </div>
-            <div>
-              <URLParameters
-                parameters={[
-                  { name: 'state', type: 'string', required: false, description: 'This is the description' },
-                  { name: 'page', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'size', type: 'number', required: false, description: 'This is the description' }
-                ]}
-              />
+            <div className='url-params'>
+              <div>URL Parameters</div>
+              <div>
+                <URLParameters
+                  parameters={[
+                    { name: 'state', type: 'string', required: false, description: 'This is the description' },
+                    { name: 'page', type: 'number', required: false, description: 'This is the description' },
+                    { name: 'size', type: 'number', required: false, description: 'This is the description' }
+                  ]}
+                />
+              </div>
             </div>
-            <div>
+            <div className='code-card-container'>
               <CodeCard
                 tabMenus={[
                   { id: 'js', text: 'JavaScript' },
@@ -169,27 +175,30 @@ function ApiDocumentationSection () {
             </div>
           </div>
         </div>
-        <div>
-          <h4>Getting health care centres within a certain radius</h4>
+        <div className='section m-top-40'>
+          <h4 className='section-header'>Getting health care centres within a certain radius</h4>
           <div>
-            <div>
+            <div className='api-url'>
               <URL
                 method='get'
                 url='http://api.nigeriahealthcarecentres.com/api/v1/hospitals/nearby'
               />
             </div>
-            <div>
-              <URLParameters
-                parameters={[
-                  { name: 'lat', type: 'decimal', required: true, description: 'This is the description' },
-                  { name: 'long', type: 'decimal', required: true, description: 'This is the description' },
-                  { name: 'radius', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'page', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'size', type: 'number', required: false, description: 'This is the description' }
-                ]}
-              />
+            <div className='url-params'>
+              <div>URL Parameters</div>
+              <div>
+                <URLParameters
+                  parameters={[
+                    { name: 'lat', type: 'decimal', required: true, description: 'This is the description' },
+                    { name: 'long', type: 'decimal', required: true, description: 'This is the description' },
+                    { name: 'radius', type: 'number', required: false, description: 'This is the description' },
+                    { name: 'page', type: 'number', required: false, description: 'This is the description' },
+                    { name: 'size', type: 'number', required: false, description: 'This is the description' }
+                  ]}
+                />
+              </div>
             </div>
-            <div>
+            <div className='code-card-container'>
               <CodeCard
                 tabMenus={[
                   { id: 'js', text: 'JavaScript' },
@@ -216,36 +225,44 @@ function ApiDocumentationSection () {
           </div>
         </div>
       </div>
+      <div className='pagination'>
+        <Link to='/documentation'>&larr; Introduction</Link>
+      </div>
     </div>
   )
 }
 
 export default class DocumentationPage extends React.Component {
 
-  componentDidMount () {
+  componentDidUpdate () {
     Prism.highlightAll()
   }
 
   render (): JSX.Element {
+
     return (
       <Template>
-        <div style={{ display: 'flex', 'flexDirection': 'row' }}>
-          <div style={{ position: 'fixed', width: '200px' }}>
-            <h4>Table of Content</h4>
-            <ul>
-              <li><a href='#'>Introduction</a></li>
-              <li>
-                <a href='#'>API Documentation</a>
-                <ul>
-                  <li><a href='#'>Getting health centres in a specific location</a></li>
-                  <li><a href='#'>Getting health care centres within a certain radius</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div style={{ marginLeft: '200px' }}>
-            <IntroductionSection />
-            <ApiDocumentationSection />
+        <div className='table-of-content'>
+          <h4 className='header'>Table of Content</h4>
+          <ul className='sections'>
+            <li className='active'>
+              <Link to='/documentation'>Introduction</Link>
+            </li>
+            <li>
+              <Link to='/documentation/api-documentation'>API Documentation</Link>
+              <ul className='sub-sections'>
+                <li><a href='#'>Getting health centres in a specific location</a></li>
+                <li><a href='#'>Getting health care centres within a certain radius</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div className='doc-page-content'>
+          <div className='inner'>
+            <Switch>
+              <Route key='doc-intro' exact path='/documentation/api-documentation' component={ApiDocumentationSection} />
+              <Route key='doc-api' path='/documentation' component={IntroductionSection} />
+            </Switch>
           </div>
         </div>
       </Template>
