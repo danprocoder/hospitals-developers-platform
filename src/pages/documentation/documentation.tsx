@@ -18,9 +18,6 @@ export default class DocumentationPage extends React.Component {
   }
 
   render (): JSX.Element {
-    const matches: string = this.props.location.pathname.match(/^\/documentation(\/([^\/]*))?/, '')
-    console.log(matches)
-
     return (
       <Template>
         <Switch>

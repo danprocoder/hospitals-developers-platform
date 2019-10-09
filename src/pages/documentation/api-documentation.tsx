@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import TableOfContent from './table-of-content'
 import CodeCard, { CodeCardTabContent } from '../../components/code-card'
 import CopyButton from '../../components/copy-button'
+import ScrollSpy from '../../components/scrollspy'
 
 /* CODE EXAMPLES */
 const exampleSpecificLocation = {
@@ -96,52 +97,54 @@ export default function () {
       <div className='page api-doc'>
         <h2 className='header'>API Documentation</h2>
         <div className='content'>
-        <div className='section'>
-            <h4 className='section-header'>Getting health centres in a specific location</h4>
-            <div>
-            <div className='api-url'>
-              <URL
-                method='get'
-                url='http://api.nigeriahealthcarecentres.com/api/v1/hospitals'
-              />
-            </div>
-            <div className='url-params'>
-              <div>URL Parameters</div>
+          <div className='section'>
+            <ScrollSpy spyOn={['url', 'url-parameters', 'example']} menuListId='menu-specific-location'>
+              <h4 className='section-header'>Getting health centres in a specific location</h4>
               <div>
-                <URLParameters
-                  parameters={[
-                  { name: 'state', type: 'string', required: false, description: 'This is the description' },
-                  { name: 'page', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'size', type: 'number', required: false, description: 'This is the description' }
-                  ]}
-                />
-              </div>
-            </div>
-            <div className='code-card-container'>
-                <CodeCard
-                  tabMenus={[
-                      { id: 'js', text: 'JavaScript' },
-                      { id: 'curl', text: 'CURL' }
-                  ]}
-                >
-                  <CodeCardTabContent
-                    key='js'
-                    id='js'
-                  >
-                    <CodeView
-                      code={exampleSpecificLocation.js}
-                      rawCode={exampleSpecificLocation.js}
+                <div className='api-url' id='url'>
+                  <URL
+                    method='get'
+                    url='http://api.nigeriahealthcarecentres.com/api/v1/hospitals'
+                  />
+                </div>
+                <div className='url-params' id='url-parameters'>
+                  <div>URL Parameters</div>
+                  <div>
+                    <URLParameters
+                      parameters={[
+                      { name: 'state', type: 'string', required: false, description: 'This is the description' },
+                      { name: 'page', type: 'number', required: false, description: 'This is the description' },
+                      { name: 'size', type: 'number', required: false, description: 'This is the description' }
+                      ]}
                     />
-                  </CodeCardTabContent>
-                  <CodeCardTabContent
-                    key='curl'
-                    id='curl'
+                  </div>
+                </div>
+                <div className='code-card-container' id='example'>
+                  <CodeCard
+                    tabMenus={[
+                        { id: 'js', text: 'JavaScript' },
+                        { id: 'curl', text: 'CURL' }
+                    ]}
                   >
-                    {'$ curl http://api.blah.com/api/v1/hospitals'}
-                  </CodeCardTabContent>
-                </CodeCard>
-            </div>
-            </div>
+                    <CodeCardTabContent
+                      key='js'
+                      id='js'
+                    >
+                      <CodeView
+                        code={exampleSpecificLocation.js}
+                        rawCode={exampleSpecificLocation.js}
+                      />
+                    </CodeCardTabContent>
+                    <CodeCardTabContent
+                      key='curl'
+                      id='curl'
+                    >
+                      {'$ curl http://api.blah.com/api/v1/hospitals'}
+                    </CodeCardTabContent>
+                  </CodeCard>
+                </div>
+              </div>
+            </ScrollSpy>
         </div>
         <div className='section m-top-40'>
             <h4 className='section-header'>Getting health care centres within a certain radius</h4>

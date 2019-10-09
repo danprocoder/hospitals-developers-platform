@@ -36,6 +36,10 @@
           &:hover {
             color: #383838;
           }
+
+          &.active {
+            color: orange;
+          }
         }
       }
     }
