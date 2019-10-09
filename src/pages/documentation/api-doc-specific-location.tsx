@@ -93,13 +93,12 @@ function CodeView (props: CodeViewProps) {
 
 export default function () {
   return (
-    <TableOfContent active='api-docs'>
+    <TableOfContent active='api-docs-specific-location'>
       <div className='page api-doc'>
-        <h2 className='header'>API Documentation</h2>
+        <h2 className='header'>Getting health centres in a specific location</h2>
         <div className='content'>
           <div className='section'>
             <ScrollSpy spyOn={['url', 'url-parameters', 'example']} menuListId='menu-specific-location'>
-              <h4 className='section-header'>Getting health centres in a specific location</h4>
               <div>
                 <div className='api-url' id='url'>
                   <URL
@@ -122,8 +121,8 @@ export default function () {
                 <div className='code-card-container' id='example'>
                   <CodeCard
                     tabMenus={[
-                        { id: 'js', text: 'JavaScript' },
-                        { id: 'curl', text: 'CURL' }
+                      { id: 'js', text: 'JavaScript' },
+                      { id: 'curl', text: 'CURL' }
                     ]}
                   >
                     <CodeCardTabContent
@@ -145,59 +144,11 @@ export default function () {
                 </div>
               </div>
             </ScrollSpy>
-        </div>
-        <div className='section m-top-40'>
-            <h4 className='section-header'>Getting health care centres within a certain radius</h4>
-            <div>
-            <div className='api-url'>
-              <URL
-                method='get'
-                url='http://api.nigeriahealthcarecentres.com/api/v1/hospitals/nearby'
-              />
-            </div>
-            <div className='url-params'>
-              <div>URL Parameters</div>
-              <div>
-                <URLParameters
-                  parameters={[
-                  { name: 'lat', type: 'decimal', required: true, description: 'This is the description' },
-                  { name: 'long', type: 'decimal', required: true, description: 'This is the description' },
-                  { name: 'radius', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'page', type: 'number', required: false, description: 'This is the description' },
-                  { name: 'size', type: 'number', required: false, description: 'This is the description' }
-                  ]}
-                />
-              </div>
-            </div>
-            <div className='code-card-container'>
-              <CodeCard
-                tabMenus={[
-                    { id: 'js', text: 'JavaScript' },
-                    { id: 'curl', text: 'CURL' }
-                ]}
-              >
-                <CodeCardTabContent
-                  key='js'
-                  id='js'
-                >
-                  <CodeView
-                    code={exampleNearbyLocation.js}
-                    rawCode={exampleNearbyLocation.js}
-                  />
-                </CodeCardTabContent>
-                <CodeCardTabContent
-                  key='curl'
-                  id='curl'
-                >
-                  {'$ curl http://api.blah.com/api/v1/hospitals'}
-                </CodeCardTabContent>
-              </CodeCard>
-            </div>
           </div>
         </div>
-        </div>
-        <div className='pagination'>
+        <div className='pagination prev-next'>
           <Link to='/documentation'>&larr; Introduction</Link>
+          <Link to='/documentation/api-doc/nearby'>Getting health centres within a certain radius &rarr;</Link>
         </div>
       </div>
     </TableOfContent>

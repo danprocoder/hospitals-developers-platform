@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 const changeActiveMenu = (menuListId: string, currentItem: string) => {
+  console.log(menuListId, currentItem)
   const links = document.getElementById(menuListId).querySelectorAll('a')
 
   links.forEach((anchor) => {
@@ -19,7 +20,7 @@ type PropTypes = {
   spyOn: any[]
 }
 export default (props: PropTypes) => {
-  let currentItem: string// = props.spyOn[0]
+  let currentItem: string
 
   interface Position { id: string, yOffset: number }
   let items: Position[] = []
@@ -33,9 +34,9 @@ export default (props: PropTypes) => {
     }
     items.sort((a: Position, b: Position) => b.yOffset - a.yOffset)
 
-    window.addEventListener('scroll', () => {
+    function onScroll () {
       for (let i of items) {
-        if (i.yOffset <= window.scrollY) {
+        if (i.yOffset <= window.scrollY + 110) {
           if (currentItem !== i.id) {
             currentItem = i.id
 
@@ -44,7 +45,10 @@ export default (props: PropTypes) => {
           break
         }
       }
-    })
+    }
+    window.addEventListener('scroll', onScroll)
+
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (

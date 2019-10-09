@@ -2,7 +2,8 @@ import * as React from 'react'
 import { Switch, Route, Link } from 'react-router-dom'
 import * as Prism from 'prismjs'
 import Template from './template'
-import ApiDocumentationSection from './api-documentation'
+import ApiDocSpecificLocation from './api-doc-specific-location'
+import ApiDocCertainRadius from './api-doc-certain-radius'
 import IntroductionSection from './introduction'
 import '../../../public/scss/pages/documentation/documentation.scss'
 
@@ -21,8 +22,9 @@ export default class DocumentationPage extends React.Component {
     return (
       <Template>
         <Switch>
-          <Route key='doc-intro' exact path='/documentation/api-documentation' component={ApiDocumentationSection} />
-          <Route key='doc-api' exact path='/documentation' component={IntroductionSection} />
+          <Route key='doc-api-specific-location' exact path='/documentation/api-doc/specific-location' component={ApiDocSpecificLocation} />
+          <Route key='doc-api-nearby' exact path='/documentation/api-doc/nearby' component={ApiDocCertainRadius} />
+          <Route key='doc-intro' exact path='/documentation' component={IntroductionSection} />
         </Switch>
       </Template>
     )

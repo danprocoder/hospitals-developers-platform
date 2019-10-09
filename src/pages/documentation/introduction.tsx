@@ -10,8 +10,8 @@ export default function () {
         <div className='content'>
           <Link to='/signup'>Get your API key</Link>
         </div>
-        <div className='pagination'>
-          <Link to='/documentation/api-documentation'>API Documentation &rarr;</Link>
+        <div className='pagination next-only'>
+          <Link to='/documentation/api-doc/specific-location'>Getting health centres in a specific location &rarr;</Link>
         </div>
       </div>
     </TableOfContent>
