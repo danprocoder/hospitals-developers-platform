@@ -10,8 +10,10 @@ import Button from '../components/button'
 import CodeCard, { CodeCardTabContent } from '../components/code-card'
 import '../../public/scss/pages/home.scss'
 
+declare const API_BASE_URL: string
+declare const TEST_API_KEY: string
+
 class TryItOut extends React.Component<any> {
-  baseUrl = 'http://localhost:4032/api/v1'
 
   state = {
     request: {
@@ -30,6 +32,7 @@ class TryItOut extends React.Component<any> {
     },
     endPoint: 'specific_location',
     response: '',
+    locationIsLoading: false,
     isGettingResult: false
   }
 
@@ -69,10 +72,9 @@ class TryItOut extends React.Component<any> {
       request: { ...request, path: urlPath, params }
     })
 
-    fetch(this.baseUrl.concat(urlPath), {
+    fetch(API_BASE_URL.concat(urlPath), {
       headers: {
-        'access-token':
-          'k_4QTDWLCFqlTwRWS4Ljhp7NDxM8zfMir+PNLcGi8mJvQjPI4pYodc3SjsFuQKxBddDp31hErQDBm+234DNBTKgg=='
+        'access-token': TEST_API_KEY
       }
     })
       .then((response: Response) => response.text())
@@ -101,11 +103,14 @@ class TryItOut extends React.Component<any> {
     const { geolocation = null } = navigator
 
     if (geolocation) {
+      this.setState({ locationIsLoading: true })
+
       geolocation.getCurrentPosition((position: Position) => {
         const { latitude, longitude } = position.coords
 
         this.setState({
-          formData: { ...this.state.formData, latitude, longitude }
+          formData: { ...this.state.formData, latitude, longitude },
+          locationIsLoading: false
         })
       })
     }
@@ -117,7 +122,8 @@ class TryItOut extends React.Component<any> {
       response,
       request,
       formData,
-      endPoint
+      endPoint,
+      locationIsLoading
     } = this.state
 
     return (
@@ -159,13 +165,17 @@ class TryItOut extends React.Component<any> {
                   value={formData.longitude}
                 />
                 <div>
-                  <a
-                    href='#'
-                    onClick={(event: any) => this.useCurrentLocation(event)}
-                  >
-                    <MapPin />
-                    Use Current Location
-                  </a>
+                  {locationIsLoading ? (
+                    <div>Getting your location...</div>
+                  ) : (
+                    <a
+                      href='#'
+                      onClick={(event: any) => this.useCurrentLocation(event)}
+                    >
+                      <MapPin />
+                      Use Current Location
+                    </a>
+                  )}
                 </div>
                 <InputField
                   label='Radius (m)'
@@ -202,9 +212,9 @@ class TryItOut extends React.Component<any> {
               <div className='request-body'>
                 <div>
                   <span className='method'>{request.method}</span>
-                  <span className='url'>{this.baseUrl.concat(request.path)}</span>
+                  <span className='url'>{API_BASE_URL.concat(request.path)}</span>
                   <CopyButton
-                    text={this.baseUrl.concat(request.path)}
+                    text={API_BASE_URL.concat(request.path)}
                     successMessage='URL copied to clipboard'
                   />
                 </div>

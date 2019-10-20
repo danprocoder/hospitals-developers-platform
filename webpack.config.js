@@ -1,5 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+
+require('dotenv').config()
+
+const constants = {}
+Object.keys(process.env).forEach((k) => {
+  constants[k] = JSON.stringify(process.env[k])
+})
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -46,6 +54,7 @@ module.exports = {
       filename: 'index.html',
       template: './public/index.html',
       favicon: './public/favicon.png'
-    })
+    }),
+    new webpack.DefinePlugin(constants)
   ]
 };
