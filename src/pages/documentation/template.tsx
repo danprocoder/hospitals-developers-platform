@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import '../../../public/scss/pages/templates/default.scss'
+import '../../../public/scss/pages/documentation/template.scss'
 
 interface TemplateProps {
   children: React.ReactNode
 }
 
 const Header = (): JSX.Element => (
-  <div className='default site-header'>
-    <div className='inner center-container'>
+  <div className='documentation site-header'>
+    <div className='inner'>
       <div className='logo-wrapper'>
         <Link to='/'>Logo</Link>
       </div>
